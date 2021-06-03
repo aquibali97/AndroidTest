@@ -1,0 +1,31 @@
+<resources>
+    <string name="app_name">Android Test App</string>
+
+    <string name="log_in">Log in</string>
+    <string name="login">Login</string>
+    <string name="signUp">Sign Up</string>
+    <string name="name">Name</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="ForgotYourPassword">Forgot your password?</string>
+    <string name="or">OR</string>
+    <string name="google">Google</string>
+    <string name="linkedin">Linkedin</string>
+    <string name="checkBox"> would like to receive your newsletter and other promotional information</string>
+    <string name="hotDeals">Hot deals</string>
+    <string name="trending">Trending</string>
+    <string name="back">Back</string>
+    <string name="filter">Filter</string>
+    <string name="market">Market</string>
+    <string name="profile">Profile</string>
+    <string name="logout">Logout</string>
+    <string name="victoriaRobertson">Victor Robertson</string>
+    <string name="status">Status</string>
+    <string name="photos">Photos</string>
+    <string name="posts">Posts</string>
+    <string name="header">Header</string>
+    <string name="ago">8m ago</string>
+    <string name="post">He will want to use your yacht,and i dont want this thing smelling like fish.</string>
+
+
+</resources>

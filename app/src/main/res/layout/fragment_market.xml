@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar_market">
+    </include>
+
+    <ScrollView
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:fillViewport="true"
+        android:layout_below="@id/toolbar">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_height="match_parent"
+            android:layout_width="match_parent">
+
+            <com.mancj.materialsearchbar.MaterialSearchBar
+                android:id="@+id/searchView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:padding="3dp"
+                app:mt_placeholder="Search"
+                app:mt_hint="Search"
+                app:mt_navIconEnabled="false"
+                app:mt_roundedSearchBarEnabled="true"
+                android:elevation="3dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/toolbar"
+                app:layout_constraintBottom_toTopOf="@id/layout">
+            </com.mancj.materialsearchbar.MaterialSearchBar>
+
+            <RelativeLayout
+                android:id="@+id/layout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:padding="3dp"
+                app:layout_constraintTop_toBottomOf="@+id/searchView"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginTop="4dp">
+
+                <LinearLayout
+                    android:id="@+id/hotDealsLayout"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:weightSum="2"
+                    android:visibility="visible"
+                    android:layout_marginTop="5dp">
+
+                    <TextView
+                        android:id="@+id/txtHotDeals"
+                        android:layout_width="match_parent"
+                        android:layout_marginStart="5dp"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                        android:gravity="start"
+                        android:textColor="@color/black"
+                        android:text="@string/hotDeals">
+                    </TextView>
+
+                </LinearLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/hotDealsLayout"
+                    android:id="@+id/hotDealsRecyclerView"
+                    android:orientation="horizontal"/>
+
+                <LinearLayout
+                    android:id="@+id/trendingLayout"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:weightSum="2"
+                    android:visibility="visible"
+                    android:layout_below="@id/hotDealsRecyclerView"
+                    android:layout_marginTop="5dp">
+
+                    <TextView
+                        android:id="@+id/txtTrending"
+                        android:layout_width="match_parent"
+                        android:layout_marginStart="5dp"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                        android:gravity="start"
+                        android:textColor="@color/black"
+                        android:text="@string/trending">
+                    </TextView>
+
+                </LinearLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/trendingLayout"
+                    android:id="@+id/trendingRecyclerView"
+                    android:orientation="horizontal"/>
+
+            </RelativeLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+
+</RelativeLayout>

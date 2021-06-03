@@ -10,19 +10,28 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.androiddevelopmenttestt.Adapters.DBAdapter;
 import com.example.androiddevelopmenttestt.R;
-import com.example.androiddevelopmenttestt.ViewModel.SignupViewModel;
-import com.example.androiddevelopmenttestt.room.Signup;
+import com.example.androiddevelopmenttestt.utilities.SharedPreferenceHelper;
+
+import java.sql.SQLException;
 
 public class SignUpActivity extends AppCompatActivity {
 
     private Button signupButton;
     private TextView txtLogin,name,email,password;
-    private SignupViewModel noteViewModel;
+    private DBAdapter dbAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        String Email = SharedPreferenceHelper.getSharedPreferenceString(SignUpActivity.this,"email","");
+        if(!Email.isEmpty()){
+            Intent intent = new Intent(SignUpActivity.this, HomeActivity.class);
+            startActivity(intent);
+            finish();
+        }
         setContentView(R.layout.activity_sign_up);
 
         getWindow().setSoftInputMode(
@@ -35,7 +44,12 @@ public class SignUpActivity extends AppCompatActivity {
         email = findViewById(R.id.email);
         password = findViewById(R.id.password);
 
+        dbAdapter = new DBAdapter(this);
+        dbAdapter.open();
+
         onClickListner();
+
+
     }
 
 
@@ -50,14 +64,17 @@ public class SignUpActivity extends AppCompatActivity {
                 String Password = password.getText().toString();
 
                 if(Name.isEmpty() || Email.isEmpty() || Password.isEmpty()){
-
                     Toast.makeText(SignUpActivity.this,"Empty field ",Toast.LENGTH_SHORT).show();
                 }else{
 
-                    noteViewModel.insertNote(new Signup(Name,Email,Password));
-
+                    long i = dbAdapter.register(Name,Email,Password);
+                    if(i != -1){
+                        Toast.makeText(SignUpActivity.this, "You have successfully registered",Toast.LENGTH_LONG).show();
                     Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
                     startActivity(intent);
+                    finish();
+                    }
+
                 }
             }
         });

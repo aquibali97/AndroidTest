@@ -6,15 +6,22 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.androiddevelopmenttestt.Adapters.DBAdapter;
 import com.example.androiddevelopmenttestt.R;
 import com.example.androiddevelopmenttestt.databinding.ActivityMainBinding;
+import com.example.androiddevelopmenttestt.utilities.SharedPreferenceHelper;
+
+import java.util.EnumMap;
 
 public class LoginActivity extends AppCompatActivity {
 
     private Button btnLogin;
+    private DBAdapter dbAdapter;
+    private TextView email,password;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,12 +32,18 @@ public class LoginActivity extends AppCompatActivity {
         TextView login = findViewById(R.id.txtLogin);
         TextView heading  = findViewById(R.id.heading);
 
+        email = findViewById(R.id.email);
+        password = findViewById(R.id.password);
+
         btnLogin = findViewById(R.id.loginButton);
 
         cross.setVisibility(View.GONE);
         login.setVisibility(View.GONE);
 
         heading.setText(R.string.login);
+
+        dbAdapter = new DBAdapter(this);
+        dbAdapter.open();
 
         onClickListner();
 
@@ -42,8 +55,44 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
-                startActivity(intent);
+                String Email = email.getText().toString();
+                String Password = password.getText().toString();
+
+                if(Email.isEmpty() || Password.isEmpty()){
+                    Toast.makeText(LoginActivity.this,"Empty field ",Toast.LENGTH_SHORT).show();
+                }else {
+
+                    try {
+
+                        if (dbAdapter.Login(Email,Password)) {
+                            Toast.makeText(LoginActivity.this,
+                                    "Successfully Logged In", Toast.LENGTH_LONG)
+                                    .show();
+
+                            SharedPreferenceHelper.setSharedPreferenceString(LoginActivity.this, "email", Email);
+
+                            Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                            finishAffinity();
+                            startActivity(intent);
+                        } else {
+                            Toast.makeText(LoginActivity.this,
+                                    "Invalid username or password",
+                                    Toast.LENGTH_LONG).show();
+                        }
+
+                    } catch (Exception e) {
+                        Toast.makeText(LoginActivity.this, "Some problem occurred",
+                                Toast.LENGTH_LONG).show();
+
+                    }
+
+                }
+
+
+
+//                dbAdapter.Login("abc","abc");
+//                Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+//                startActivity(intent);
             }
         });
 

@@ -1,6 +1,9 @@
 package com.example.androiddevelopmenttestt.View;
 
 import android.app.ActionBar;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -16,6 +19,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.androiddevelopmenttestt.Adapters.HotDealsAdapter;
@@ -34,10 +38,7 @@ import butterknife.ButterKnife;
 
 public class ProfileFragment extends Fragment {
 
-//    @BindView(R.id.btnPosts)
-//    Button btnPosts;
-//
-//    @BindView(R.id.postRecyclerView)
+
     private RecyclerView postRecyclerView;
     private ViewPager viewPager;
     private TabLayout indicator;
@@ -47,7 +48,7 @@ public class ProfileFragment extends Fragment {
     private View view;
     private Button btnPosts,btnPhotos;
     private PostsAdapter postsAdapter;
-
+    private TextView txtLogout;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -63,8 +64,24 @@ public class ProfileFragment extends Fragment {
         indicator = view.findViewById(R.id.indicator);
         postRecyclerView = view.findViewById(R.id.postRecyclerView);
         photosLayout = view.findViewById(R.id.layoutPhotos);
+        txtLogout = view.findViewById(R.id.txtLogout);
 
         btnPosts.setBackgroundColor(getResources().getColor(R.color.white));
+
+        txtLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                Toast.makeText(getContext(),"Working",Toast.LENGTH_SHORT).show();
+
+                SharedPreferences settings = getActivity().getSharedPreferences("Development_test", Context.MODE_PRIVATE);
+                settings.edit().clear().apply();
+
+                Intent intent = new Intent(getActivity(), SignUpActivity.class);
+                getActivity().finishAffinity(); // Clears the stack !
+                getActivity().startActivity(intent);
+
+            }
+        });
 
         btnPhotos.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -102,8 +119,6 @@ public class ProfileFragment extends Fragment {
         });
 
         init();
-
-//        ((HomeActivity)getActivity()).updateStatusBarColor("#069C6D");
 
         return view;
 
@@ -145,8 +160,8 @@ public class ProfileFragment extends Fragment {
 
         viewPager.setAdapter(new SliderAdapter(getContext()));
         indicator.setupWithViewPager(viewPager, true);
-        Timer timer = new Timer();
-        timer.scheduleAtFixedRate(new SliderTimer(), 500, 6000);
+//        Timer timer = new Timer();
+//        timer.scheduleAtFixedRate(new SliderTimer(), 500, 6000);
 
     }
 

@@ -40,7 +40,7 @@
     </TextView>
 
     <TextView
-        android:id="@+id/txtLogin"
+        android:id="@+id/txtLogout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/logout"

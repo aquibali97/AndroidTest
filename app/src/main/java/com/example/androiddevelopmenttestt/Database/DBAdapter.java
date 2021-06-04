@@ -1,12 +1,10 @@
-package com.example.androiddevelopmenttestt.Adapters;
+package com.example.androiddevelopmenttestt.Database;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
-
-import com.example.androiddevelopmenttestt.DBHelper;
 
 public class DBAdapter
 {
@@ -47,9 +45,9 @@ public class DBAdapter
         return mDb.insert(DATABASE_TABLE, null, initialValues);
     }
 
-    public boolean Login(String username, String password) throws SQLException
+    public boolean Login(String email, String password) throws SQLException
     {
-        Cursor mCursor = mDb.rawQuery("SELECT * FROM " + DATABASE_TABLE + " WHERE username=? AND password=?", new String[]{username,password});
+        Cursor mCursor = mDb.rawQuery("SELECT * FROM " + DATABASE_TABLE + " WHERE email=? AND password=?", new String[]{email,password});
         if (mCursor != null) {
             if(mCursor.getCount() > 0)
             {
@@ -58,4 +56,19 @@ public class DBAdapter
         }
         return false;
     }
+
+    public String getName(String email, String password) throws SQLException
+    {
+        Cursor mCursor = mDb.rawQuery("SELECT * FROM " + DATABASE_TABLE + " WHERE email=? AND password=?", new String[]{email,password});
+        mCursor.moveToFirst();
+        if (mCursor != null) {
+            if(mCursor.getCount() > 0)
+            {
+                String userName = mCursor.getString(0);
+                return userName;
+            }
+        }
+        return "";
+    }
+
 }

@@ -10,12 +10,9 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.androiddevelopmenttestt.Adapters.DBAdapter;
+import com.example.androiddevelopmenttestt.Database.DBAdapter;
 import com.example.androiddevelopmenttestt.R;
-import com.example.androiddevelopmenttestt.databinding.ActivityMainBinding;
 import com.example.androiddevelopmenttestt.utilities.SharedPreferenceHelper;
-
-import java.util.EnumMap;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -70,6 +67,7 @@ public class LoginActivity extends AppCompatActivity {
                                     .show();
 
                             SharedPreferenceHelper.setSharedPreferenceString(LoginActivity.this, "email", Email);
+                            SharedPreferenceHelper.setSharedPreferenceString(LoginActivity.this, "password", Password);
 
                             Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                             finishAffinity();

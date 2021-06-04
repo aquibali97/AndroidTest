@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,7 +27,9 @@ import com.example.androiddevelopmenttestt.Adapters.HotDealsAdapter;
 import com.example.androiddevelopmenttestt.Adapters.PostsAdapter;
 import com.example.androiddevelopmenttestt.Adapters.SliderAdapter;
 import com.example.androiddevelopmenttestt.Adapters.TrendingAdapter;
+import com.example.androiddevelopmenttestt.Database.DBAdapter;
 import com.example.androiddevelopmenttestt.R;
+import com.example.androiddevelopmenttestt.utilities.SharedPreferenceHelper;
 import com.google.android.material.tabs.TabLayout;
 
 import java.nio.file.attribute.PosixFileAttributes;
@@ -48,7 +51,8 @@ public class ProfileFragment extends Fragment {
     private View view;
     private Button btnPosts,btnPhotos;
     private PostsAdapter postsAdapter;
-    private TextView txtLogout;
+    private TextView txtLogout,name;
+    private DBAdapter dbAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -65,6 +69,19 @@ public class ProfileFragment extends Fragment {
         postRecyclerView = view.findViewById(R.id.postRecyclerView);
         photosLayout = view.findViewById(R.id.layoutPhotos);
         txtLogout = view.findViewById(R.id.txtLogout);
+        name = view.findViewById(R.id.name);
+
+        dbAdapter = new DBAdapter(getContext());
+        dbAdapter.open();
+
+        String Email = SharedPreferenceHelper.getSharedPreferenceString(getContext(),"email","");
+        String Password = SharedPreferenceHelper.getSharedPreferenceString(getContext(),"password","");
+
+        String Name = dbAdapter.getName(Email,Password);
+
+        Log.i("name",Name);
+
+        name.setText(Name);
 
         btnPosts.setBackgroundColor(getResources().getColor(R.color.white));
 

@@ -10,11 +10,9 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.androiddevelopmenttestt.Adapters.DBAdapter;
+import com.example.androiddevelopmenttestt.Database.DBAdapter;
 import com.example.androiddevelopmenttestt.R;
 import com.example.androiddevelopmenttestt.utilities.SharedPreferenceHelper;
-
-import java.sql.SQLException;
 
 public class SignUpActivity extends AppCompatActivity {
 
@@ -59,6 +57,8 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                String emailPattern = "[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\\.+[a-z]+";
+
                 String Name = name.getText().toString();
                 String Email = email.getText().toString();
                 String Password = password.getText().toString();
@@ -67,12 +67,16 @@ public class SignUpActivity extends AppCompatActivity {
                     Toast.makeText(SignUpActivity.this,"Empty field ",Toast.LENGTH_SHORT).show();
                 }else{
 
-                    long i = dbAdapter.register(Name,Email,Password);
-                    if(i != -1){
-                        Toast.makeText(SignUpActivity.this, "You have successfully registered",Toast.LENGTH_LONG).show();
-                    Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
-                    startActivity(intent);
-                    finish();
+                    if((!Email.matches(emailPattern)) || (Password.length() < 7)){
+                        Toast.makeText(SignUpActivity.this,"Email Should be is correct format or password lenght should not be less than 7",Toast.LENGTH_SHORT).show();
+                    }else {
+                        long i = dbAdapter.register(Name, Email, Password);
+                        if (i != -1) {
+                            Toast.makeText(SignUpActivity.this, "You have successfully registered", Toast.LENGTH_LONG).show();
+                            Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
+                            startActivity(intent);
+                            finish();
+                        }
                     }
 
                 }
